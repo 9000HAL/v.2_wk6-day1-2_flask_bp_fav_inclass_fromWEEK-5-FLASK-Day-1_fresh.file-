@@ -24,6 +24,13 @@ def create_app():
     db.init_app(app)              #replaced by SQLAlchemy(app) above [huh???]
     migrate.init_app(app, db)     
 
+
+    #login_manager settings
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message = 'You must be logged in to view this page!'
+    login_manager.login_message_category = 'warning'
+
+
     #import blueprints
     from app.blueprints.main import main
     from app.blueprints.auth import auth

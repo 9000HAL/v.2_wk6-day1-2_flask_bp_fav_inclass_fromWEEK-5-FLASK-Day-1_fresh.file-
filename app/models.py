@@ -10,10 +10,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String, nullable=False)
     #password_hash = db.Column(db.String) 
     password_hash = db.Column(db.String, nullable=False) # Save hashed password.
-
-    
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
-
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     #this section from template below
 
@@ -30,14 +28,26 @@ class User(UserMixin, db.Model):
         self.email = user_data['email']
         self.password_hash = self.hash_password(user_data['password'])    #c4 suggested this change
 
-"""
-    def from_dict(self, user_data):
-        self.first_name = user_data['first_name']
-        self.last_name = user_data['last_name']
-        self.email = user_data['email']
-        self.password = self.hash_password(user_data['password'])
-"""
 
+
+
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    img_url = db.Column(db.String)
+    title = db.Column(db.String(30))
+    caption = db.Column(db.String(30))
+    created_on = db.Column(db.DateTime, default=datetime.utcnow())
+    #foreign key
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+      # This method will assign our columns with their respective values
+    def from_dict(self, post_data):
+        self.img_url = post_data['img_url']
+        self.title = post_data['title']
+        self.caption = post_data['caption']
+        self.user_id = post_data['user_id']
 
 @login_manager.user_loader
 def load_user(user_id):
