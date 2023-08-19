@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
-    #this section from template below
+    
 
     #this section from template below
     # hashes our password when user signs up
@@ -27,9 +27,6 @@ class User(UserMixin, db.Model):
         self.last_name = user_data['last_name']
         self.email = user_data['email']
         self.password_hash = self.hash_password(user_data['password'])    #c4 suggested this change
-
-
-
 
 
 

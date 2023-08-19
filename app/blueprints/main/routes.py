@@ -15,7 +15,7 @@ from app.models import Post #no error-------
 @main.route('/home') ###########gabe fix???
 def home():
     posts = Post.query.all()
-    return render_template('home.html', posts=posts)
+    return render_template('home.html', posts=posts[::-1])
 
 
 
