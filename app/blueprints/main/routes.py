@@ -4,12 +4,18 @@ import requests
 from . import main
 #from flask import Blueprint      #---- GHCP commented out????use???
 from flask_login import login_required
+#from app.models import Posts #error causing ca ver.
+from app.models import Post #no error-------
+#from app.models import posts #error
+#from app.models import post #error
+
 
 
 @main.route('/')
 @main.route('/home') ###########gabe fix???
 def home():
-    return render_template('home.html')
+    posts = Post.query.all()
+    return render_template('home.html', posts=posts)
 
 
 
